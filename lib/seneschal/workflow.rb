@@ -39,6 +39,10 @@ module Seneschal
       end
     end
 
+    def current_state
+      @current_state ||= load_workflow_state
+    end
+
     def load_workflow_state
       raise "Not implemented" # to be improved
     end
