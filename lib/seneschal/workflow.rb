@@ -17,8 +17,9 @@ module Seneschal
     def transition(name, &block)
       event = @events.find { |e| e.name == name }
       raise "Invalid transition" unless event
-      persist_workflow_state(event.to)
       send("#{event.to}_entered") if respond_to?("#{event.to}_entered")
+      persist_workflow_state(event.to)
+      event_fired(current_state, event)
     end
 
     def state(name)
@@ -49,6 +50,9 @@ module Seneschal
   
     def persist_workflow_state(new_state)
       raise "Not implemented" # to be improved
+    end
+
+    def event_fired(current_state, event)
     end
   end
 end
